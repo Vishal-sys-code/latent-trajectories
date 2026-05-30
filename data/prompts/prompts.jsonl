@@ -1,0 +1,50 @@
+{"id": "animal_001", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "cat"}
+{"id": "animal_002", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "lion"}
+{"id": "animal_003", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "dolphin"}
+{"id": "animal_004", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "eagle"}
+{"id": "animal_005", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "dog"}
+{"id": "animal_006", "group": "animals", "subcategory": "domestic", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The animal is a cat."}
+{"id": "animal_007", "group": "animals", "subcategory": "wild", "prompt_type": "contextual", "difficulty": "easy", "prompt": "A tiger is a wild animal."}
+{"id": "animal_008", "group": "animals", "subcategory": "marine", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The dolphin swims in the ocean."}
+{"id": "animal_009", "group": "animals", "subcategory": "bird", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The eagle soars through the sky."}
+{"id": "animal_010", "group": "animals", "subcategory": "domestic", "prompt_type": "contextual", "difficulty": "easy", "prompt": "My dog barks loudly."}
+{"id": "vehicle_001", "group": "vehicles", "subcategory": "land", "prompt_type": "atomic", "difficulty": "easy", "prompt": "car"}
+{"id": "vehicle_002", "group": "vehicles", "subcategory": "air", "prompt_type": "atomic", "difficulty": "easy", "prompt": "airplane"}
+{"id": "vehicle_003", "group": "vehicles", "subcategory": "water", "prompt_type": "atomic", "difficulty": "easy", "prompt": "ship"}
+{"id": "vehicle_004", "group": "vehicles", "subcategory": "space", "prompt_type": "atomic", "difficulty": "easy", "prompt": "rocket"}
+{"id": "vehicle_005", "group": "vehicles", "subcategory": "land", "prompt_type": "atomic", "difficulty": "easy", "prompt": "train"}
+{"id": "vehicle_006", "group": "vehicles", "subcategory": "land", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The vehicle is a car."}
+{"id": "vehicle_007", "group": "vehicles", "subcategory": "air", "prompt_type": "contextual", "difficulty": "easy", "prompt": "An airplane flies high."}
+{"id": "vehicle_008", "group": "vehicles", "subcategory": "water", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The ship sails on the sea."}
+{"id": "vehicle_009", "group": "vehicles", "subcategory": "space", "prompt_type": "contextual", "difficulty": "easy", "prompt": "A rocket travels to space."}
+{"id": "vehicle_010", "group": "vehicles", "subcategory": "land", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The train runs on tracks."}
+{"id": "emotion_001", "group": "emotions", "subcategory": "positive", "prompt_type": "atomic", "difficulty": "easy", "prompt": "happy"}
+{"id": "emotion_002", "group": "emotions", "subcategory": "negative", "prompt_type": "atomic", "difficulty": "easy", "prompt": "sad"}
+{"id": "emotion_003", "group": "emotions", "subcategory": "negative", "prompt_type": "atomic", "difficulty": "easy", "prompt": "angry"}
+{"id": "emotion_004", "group": "emotions", "subcategory": "negative", "prompt_type": "atomic", "difficulty": "easy", "prompt": "fearful"}
+{"id": "emotion_005", "group": "emotions", "subcategory": "positive", "prompt_type": "atomic", "difficulty": "easy", "prompt": "excited"}
+{"id": "emotion_006", "group": "emotions", "subcategory": "positive", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The person feels happy."}
+{"id": "emotion_007", "group": "emotions", "subcategory": "negative", "prompt_type": "contextual", "difficulty": "easy", "prompt": "He was very sad."}
+{"id": "emotion_008", "group": "emotions", "subcategory": "negative", "prompt_type": "contextual", "difficulty": "easy", "prompt": "She became extremely angry."}
+{"id": "emotion_009", "group": "emotions", "subcategory": "negative", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The child felt fearful."}
+{"id": "emotion_010", "group": "emotions", "subcategory": "positive", "prompt_type": "contextual", "difficulty": "easy", "prompt": "They were excited for the event."}
+{"id": "reasoning_001", "group": "reasoning", "subcategory": "relational", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If A > B and B > C, which is larger?"}
+{"id": "reasoning_002", "group": "reasoning", "subcategory": "syllogistic", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "If all roses are flowers and all flowers are plants, are roses plants?"}
+{"id": "reasoning_003", "group": "reasoning", "subcategory": "relational", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If John is older than Mary and Mary is older than Tom, who is youngest?"}
+{"id": "reasoning_004", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If I have 3 apples and give you 1, how many do I have left?"}
+{"id": "reasoning_005", "group": "reasoning", "subcategory": "logical", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "If it is raining, the ground is wet. It is not raining. Is the ground wet?"}
+{"id": "reasoning_006", "group": "reasoning", "subcategory": "syllogistic", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "If all birds can fly and a sparrow is a bird, can it fly?"}
+{"id": "reasoning_007", "group": "reasoning", "subcategory": "logical", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "A box contains either a red ball or a blue ball. It does not contain a red ball. What does it contain?"}
+{"id": "reasoning_008", "group": "reasoning", "subcategory": "relational", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Alice is taller than Bob. Charlie is taller than Alice. Who is the shortest?"}
+{"id": "reasoning_009", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "A train leaves at 3:00 PM and takes 2 hours. When does it arrive?"}
+{"id": "reasoning_010", "group": "reasoning", "subcategory": "logical", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "If P implies Q, and P is true, what can we say about Q?"}
+{"id": "analogy_001", "group": "analogies", "subcategory": "relational", "prompt_type": "atomic", "difficulty": "easy", "prompt": "King : Queen"}
+{"id": "analogy_002", "group": "analogies", "subcategory": "relational", "prompt_type": "atomic", "difficulty": "easy", "prompt": "Man : Woman"}
+{"id": "analogy_003", "group": "analogies", "subcategory": "geographic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "Paris : France"}
+{"id": "analogy_004", "group": "analogies", "subcategory": "functional", "prompt_type": "atomic", "difficulty": "easy", "prompt": "Doctor : Hospital"}
+{"id": "analogy_005", "group": "analogies", "subcategory": "functional", "prompt_type": "atomic", "difficulty": "easy", "prompt": "Teacher : School"}
+{"id": "analogy_006", "group": "analogies", "subcategory": "relational", "prompt_type": "contextual", "difficulty": "medium", "prompt": "A king is to a queen as a man is to a woman."}
+{"id": "analogy_007", "group": "analogies", "subcategory": "geographic", "prompt_type": "contextual", "difficulty": "medium", "prompt": "Paris is the capital of France."}
+{"id": "analogy_008", "group": "analogies", "subcategory": "geographic", "prompt_type": "contextual", "difficulty": "medium", "prompt": "Tokyo is the capital of Japan."}
+{"id": "analogy_009", "group": "analogies", "subcategory": "functional", "prompt_type": "contextual", "difficulty": "medium", "prompt": "A doctor works in a hospital."}
+{"id": "analogy_010", "group": "analogies", "subcategory": "functional", "prompt_type": "contextual", "difficulty": "medium", "prompt": "A teacher works in a school."}
