@@ -12,3 +12,4 @@ umap-learn
 plotly
 nbformat
 joblib
+scipy
