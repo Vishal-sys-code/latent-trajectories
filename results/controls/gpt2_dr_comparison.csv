@@ -1,0 +1,4 @@
+method,final_layer_silhouette,avg_trajectory_length,avg_convergence,model
+PCA,-0.5092154,1262.8297,-60.937027,gpt2
+UMAP,-0.600286,47.21927,11.018036,gpt2
+tSNE,-0.4331168,54.95107,5.496648,gpt2

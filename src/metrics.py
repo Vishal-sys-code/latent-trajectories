@@ -4,7 +4,7 @@ import numpy as np
 from typing import List, Dict, Tuple
 from sklearn.metrics import silhouette_score
 import scipy.stats
-from src.trajectories import HiddenStateTrajectory
+from trajectories import HiddenStateTrajectory
 
 def compute_trajectory_length(trajectories: List[HiddenStateTrajectory]) -> np.ndarray:
     """

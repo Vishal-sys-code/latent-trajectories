@@ -1,0 +1,5 @@
+seed,final_layer_silhouette,avg_trajectory_length,model
+0,-0.57602084,45.609562,gpt2
+42,-0.600286,47.21927,gpt2
+123,-0.60264033,43.99083,gpt2
+999,-0.5561527,46.697777,gpt2

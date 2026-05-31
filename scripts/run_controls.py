@@ -1,13 +1,15 @@
-import numpy as np
 import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+import numpy as np
 import argparse
 import pandas as pd
 from glob import glob
 import joblib
 
-from src.load_prompts import load_prompts
-from src.dimensionality_reduction import load_all_trajectories
-from src.controls import (
+from load_prompts import load_prompts
+from dimensionality_reduction import load_all_trajectories
+from controls import (
     permute_labels,
     gaussian_embeddings,
     shuffle_embeddings,
