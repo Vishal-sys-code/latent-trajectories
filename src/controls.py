@@ -3,8 +3,8 @@ import torch
 import pandas as pd
 from typing import List, Dict, Tuple, Optional
 import copy
-from trajectories import HiddenStateTrajectory
-from metrics import compute_layerwise_silhouette, compute_trajectory_length, compute_curvature
+from .trajectories import HiddenStateTrajectory
+from .metrics import compute_layerwise_silhouette, compute_trajectory_length, compute_curvature
 import umap
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
