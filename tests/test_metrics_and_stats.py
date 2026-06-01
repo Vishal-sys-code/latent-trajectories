@@ -1,11 +1,11 @@
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pytest
 import numpy as np
 import torch
-from trajectories import HiddenStateTrajectory
-from metrics import (
+from src.trajectories import HiddenStateTrajectory
+from src.metrics import (
     compute_trajectory_length,
     compute_curvature,
     compute_layer_velocity,
