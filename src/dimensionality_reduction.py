@@ -8,8 +8,8 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import trustworthiness
 import umap
 from glob import glob
-from trajectories import HiddenStateTrajectory
-from load_prompts import load_prompts
+from .trajectories import HiddenStateTrajectory
+from .load_prompts import load_prompts
 
 def load_all_trajectories(model_name: str, trajectories_dir: str = "data/trajectories"):
     """
