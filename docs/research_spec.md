@@ -3,6 +3,26 @@
 ## 1. Motivation
 Current analyses of large language models often focus on static embeddings or final outputs. However, viewing representations through a computational lens suggests that transformers build knowledge iteratively, layer by layer. Understanding how hidden representations dynamically traverse the latent space—whether they follow structured geometric paths or random walks—can bridge the gap between mechanistic interpretability and representational learning. By framing transformer computation as a trajectory, we can evaluate how and where structured reasoning, semantic convergence, and disambiguation occur across layers. This structural insight is crucial for understanding the latent neural manifolds and could lay the groundwork for better interventions, pruning, or training strategies.
 
+## Computational Neuroscience Perspective
+
+This work does not claim that transformer models implement biological cognition. Instead, we investigate whether analytical tools developed for studying neural population dynamics can reveal useful geometric structure in transformer representations. The central hypothesis is that trajectory-based analyses may provide insights that are difficult to obtain from static layerwise representations alone.
+
+### Neural Manifolds
+Brain activity often evolves along low-dimensional manifolds. 
+**Question:** Can transformer hidden states exhibit similar low-dimensional organization?
+
+### Population Trajectories
+Neural populations move through state space over time.
+**Question:** Can transformer layer transitions be interpreted as analogous trajectories?
+
+### Attractor Dynamics
+Brains may converge toward stable states.
+**Question:** Do transformer trajectories converge toward semantic attractors?
+
+### Representational Geometry
+Representations can be studied geometrically rather than neuron-by-neuron.
+**Question:** Can geometry reveal semantic structure hidden from individual activations?
+
 ## 2. Research Question
 Do hidden representations evolve as structured trajectories through latent space, rather than remaining as static layerwise embeddings? Specifically, how do semantically related concepts behave geometrically as they pass through successive transformer layers?
 
