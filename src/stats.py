@@ -148,3 +148,19 @@ def effect_size(group_a: np.ndarray, group_b: np.ndarray) -> float:
         The Cohen's d effect size.
     """
     return cohens_d(group_a, group_b)
+def compare_distributions(
+    group_a: np.ndarray, 
+    group_b: np.ndarray,
+    num_permutations: int = 10000,
+    random_seed: Optional[int] = None
+) -> dict:
+    """
+    Comprehensive comparison between two distributions.
+    Returns p-value and Cohen's D.
+    """
+    p_val = permutation_test(group_a, group_b, num_permutations, random_seed)
+    effect_size_d = cohens_d(group_a, group_b)
+    return {
+        "p_value": p_val,
+        "cohens_d": effect_size_d
+    }
