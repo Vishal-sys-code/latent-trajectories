@@ -148,6 +148,68 @@ def effect_size(group_a: np.ndarray, group_b: np.ndarray) -> float:
         The Cohen's d effect size.
     """
     return cohens_d(group_a, group_b)
+import scipy.stats as stats
+
+def mann_whitney_u(group_a: np.ndarray, group_b: np.ndarray) -> float:
+    """
+    Performs a Mann-Whitney U test between two independent groups.
+    
+    Args:
+        group_a: A 1D numpy array of values for group A.
+        group_b: A 1D numpy array of values for group B.
+        
+    Returns:
+        The two-sided p-value.
+    """
+    a = np.asarray(group_a)
+    b = np.asarray(group_b)
+    
+    if len(a) == 0 or len(b) == 0:
+        return 1.0
+        
+    stat, p_value = stats.mannwhitneyu(a, b, alternative='two-sided')
+    return float(p_value)
+
+def holm_bonferroni_correction(p_values: list[float]) -> list[float]:
+    """
+    Applies the Holm-Bonferroni correction to a list of p-values.
+    
+    Args:
+        p_values: A list of p-values to correct.
+        
+    Returns:
+        A list of corrected p-values.
+    """
+    if not p_values:
+        return []
+        
+    p_values = np.asarray(p_values)
+    m = len(p_values)
+    
+    # Sort indices by p-value
+    sorted_indices = np.argsort(p_values)
+    
+    corrected_p = np.zeros(m)
+    
+    # Track the maximum corrected p-value seen so far to enforce monotonicity
+    max_corrected = 0.0
+    
+    for rank, idx in enumerate(sorted_indices):
+        p = p_values[idx]
+        multiplier = m - rank
+        corrected = p * multiplier
+        
+        # Corrected p-value must be monotonically non-decreasing
+        corrected = max(max_corrected, corrected)
+        
+        # P-value cannot exceed 1.0
+        corrected = min(corrected, 1.0)
+        
+        max_corrected = corrected
+        corrected_p[idx] = corrected
+        
+    return corrected_p.tolist()
+
 def compare_distributions(
     group_a: np.ndarray, 
     group_b: np.ndarray,
@@ -156,11 +218,13 @@ def compare_distributions(
 ) -> dict:
     """
     Comprehensive comparison between two distributions.
-    Returns p-value and Cohen's D.
+    Returns permutation test p-value, Mann-Whitney U p-value, and Cohen's D.
     """
-    p_val = permutation_test(group_a, group_b, num_permutations, random_seed)
+    p_val_perm = permutation_test(group_a, group_b, num_permutations, random_seed)
+    p_val_mwu = mann_whitney_u(group_a, group_b)
     effect_size_d = cohens_d(group_a, group_b)
     return {
-        "p_value": p_val,
+        "p_value_permutation": p_val_perm,
+        "p_value_mwu": p_val_mwu,
         "cohens_d": effect_size_d
     }
