@@ -9,8 +9,8 @@ import sys
 sys.path.append('.')
 
 from src.trajectories import HiddenStateTrajectory
-from src.metrics import compute_convergence_score
-from src.stats import compare_distributions
+from src.metrics import compute_per_prompt_convergence_score
+from src.stats import compare_distributions, bootstrap_ci, permutation_test, cohens_d
 
 sns.set_theme(style="whitegrid")
 
@@ -58,71 +58,116 @@ else:
 
 # Convergence Analysis
 print("Computing convergence scores...")
-scores = compute_convergence_score(trajectories, labels)
-num_layers = len(scores)
+scores_per_prompt = compute_per_prompt_convergence_score(trajectories, labels)
+num_layers = scores_per_prompt.shape[1]
+unique_labels = sorted(list(set(labels)))
 
-df_conv = pd.DataFrame({
-    'layer': range(1, num_layers + 1),
-    'convergence_score': scores
-})
+results = []
+
+plt.figure(figsize=(10, 6))
+
+colors = sns.color_palette("husl", len(unique_labels))
+
+for idx, cat in enumerate(unique_labels):
+    cat_indices = [i for i, l in enumerate(labels) if l == cat]
+    cat_scores = scores_per_prompt[cat_indices] # [N_cat, L]
+    
+    mean_scores = []
+    lower_cis = []
+    upper_cis = []
+    
+    for l in range(num_layers):
+        layer_scores = cat_scores[:, l]
+        mean_score = np.mean(layer_scores)
+        lower_ci, upper_ci = bootstrap_ci(layer_scores, num_bootstraps=1000, confidence_level=0.95, random_seed=42)
+        
+        mean_scores.append(mean_score)
+        lower_cis.append(lower_ci)
+        upper_cis.append(upper_ci)
+        
+        results.append({
+            'category': cat,
+            'layer': l + 1,
+            'mean_tci': mean_score,
+            'lower_ci': lower_ci,
+            'upper_ci': upper_ci
+        })
+        
+    layers = np.arange(1, num_layers + 1)
+    
+    plt.plot(layers, mean_scores, label=cat, color=colors[idx], linewidth=2.5)
+    plt.fill_between(layers, lower_cis, upper_cis, color=colors[idx], alpha=0.2)
+
+df_conv = pd.DataFrame(results)
 
 os.makedirs('results/', exist_ok=True)
 df_conv.to_csv('results/convergence_metrics.csv', index=False)
 print("Saved results/convergence_metrics.csv")
 
 # Plot Convergence Score
-plt.figure(figsize=(10, 6))
-sns.lineplot(data=df_conv, x='layer', y='convergence_score', marker='o', linewidth=2.5, color='purple')
 plt.axhline(0, ls='--', color='gray', alpha=0.7)
-plt.title('Convergence Score Across Layers', fontsize=16)
+plt.title('Convergence Score Across Layers by Category', fontsize=16)
 plt.xlabel('Layer', fontsize=14)
 plt.ylabel('Convergence Score ($D_{between} - D_{within}$)', fontsize=14)
+plt.legend()
 
 os.makedirs('figures/', exist_ok=True)
 plt.savefig('figures/convergence_score_layers.pdf', bbox_inches='tight')
 plt.savefig('figures/convergence_score_layers.png', bbox_inches='tight', dpi=300)
 print("Saved figures/convergence_score_layers.pdf/png")
 
-# Significance Testing for convergence
-# Specifically comparing the distribution of pairwise distances at initial layers vs final layers
-# Since convergence implies a reduction in distance, we can compare pairwise distances at the start vs end
-# We'll do it for between-category distances and within-category distances
+# Key Statistical Comparisons (Phase 11)
 
-# Recompute pairwise distances for start and end layers to do statistical testing
-n = len(trajectories)
-stacked = torch.stack([t.trajectory for t in trajectories]) # [N, L, D]
+comparisons = []
 
-dist_l1 = torch.cdist(stacked[:, 0, :], stacked[:, 0, :], p=2).numpy()
-dist_l_end = torch.cdist(stacked[:, -1, :], stacked[:, -1, :], p=2).numpy()
+# Overall TCI across all prompts
+overall_tci = np.mean(scores_per_prompt, axis=0) # [L]
 
-within_l1, between_l1 = [], []
-within_lend, between_lend = [], []
+# Comparison A: Initial vs Final Layer
+start_layer_scores = scores_per_prompt[:, 0]
+final_layer_scores = scores_per_prompt[:, -1]
 
-for i in range(n):
-    for j in range(i + 1, n):
-        if labels[i] == labels[j]:
-            within_l1.append(dist_l1[i, j])
-            within_lend.append(dist_l_end[i, j])
-        else:
-            between_l1.append(dist_l1[i, j])
-            between_lend.append(dist_l_end[i, j])
+p_val_A = permutation_test(start_layer_scores, final_layer_scores, random_seed=42)
+d_A = cohens_d(start_layer_scores, final_layer_scores)
 
-# Test 1: Is the between-category distance significantly different from within-category distance at the final layer?
-test1 = compare_distributions(np.array(between_lend), np.array(within_lend))
+comparisons.append({
+    'Comparison': 'Start vs End',
+    'p_value': p_val_A,
+    'cohens_d': d_A
+})
 
-# Test 2: Is the convergence score at final layer significantly different from 0?
-# The difference of between and within at the final layer (using difference of means logic from MWU)
+# Comparison B: Start vs Peak Layer
+peak_layer_idx = np.argmax(overall_tci)
+peak_layer_scores = scores_per_prompt[:, peak_layer_idx]
 
-test_results = [
-    {
-        'metric': 'final_layer_category_separation',
-        'comparison': 'between_vs_within',
-        'p_value_mwu': test1['p_value_mwu'],
-        'cohens_d': test1['cohens_d']
-    }
-]
+p_val_B = permutation_test(start_layer_scores, peak_layer_scores, random_seed=42)
+d_B = cohens_d(start_layer_scores, peak_layer_scores)
 
-df_conv_tests = pd.DataFrame(test_results)
+comparisons.append({
+    'Comparison': 'Start vs Peak',
+    'p_value': p_val_B,
+    'cohens_d': d_B
+})
+
+# Comparison C: Semantic vs Reasoning
+semantic_cats = ['animals', 'objects']
+semantic_indices = [i for i, l in enumerate(labels) if l in semantic_cats]
+reasoning_indices = [i for i, l in enumerate(labels) if l == 'reasoning']
+
+if len(semantic_indices) > 0 and len(reasoning_indices) > 0:
+    semantic_final = scores_per_prompt[semantic_indices, -1]
+    reasoning_final = scores_per_prompt[reasoning_indices, -1]
+    
+    p_val_C = permutation_test(semantic_final, reasoning_final, random_seed=42)
+    d_C = cohens_d(semantic_final, reasoning_final)
+    
+    comparisons.append({
+        'Comparison': 'Semantic vs Reasoning',
+        'p_value': p_val_C,
+        'cohens_d': d_C
+    })
+
+df_comparisons = pd.DataFrame(comparisons)
 os.makedirs('results/statistics/', exist_ok=True)
-df_conv_tests.to_csv('results/statistics/convergence_tests.csv', index=False)
-print("Saved results/statistics/convergence_tests.csv")
+df_comparisons.to_csv('results/statistics/convergence_summary.csv', index=False)
+print("Saved results/statistics/convergence_summary.csv")
