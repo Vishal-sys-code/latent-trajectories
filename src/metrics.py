@@ -196,6 +196,61 @@ def compute_convergence_score(trajectories: List[HiddenStateTrajectory], labels:
         
     return np.array(scores)
 
+def compute_per_prompt_convergence_score(trajectories: List[HiddenStateTrajectory], labels: List[str]) -> np.ndarray:
+    """
+    Computes the convergence score for each prompt at each layer.
+    Convergence Score_i(l) = mean(D_between_i(l)) - mean(D_within_i(l))
+    
+    For a given prompt i:
+    - mean(D_within_i) is the average distance to other prompts in the SAME category
+    - mean(D_between_i) is the average distance to prompts in DIFFERENT categories
+    
+    Args:
+        trajectories: A list of HiddenStateTrajectory objects.
+        labels: A list of category labels for each prompt.
+        
+    Returns:
+        np.ndarray of shape [num_prompts, L] containing the convergence score.
+    """
+    if not trajectories or not labels:
+        return np.array([])
+        
+    num_layers = trajectories[0].num_layers
+    n = len(trajectories)
+    
+    unique_labels = set(labels)
+    if len(unique_labels) < 2 or n < 2:
+        return np.zeros((n, num_layers))
+        
+    # Pre-stack all trajectories to [N, L, D]
+    stacked = torch.stack([traj.trajectory for traj in trajectories]) # [N, L, D]
+    
+    scores = np.zeros((n, num_layers))
+    
+    for l in range(num_layers):
+        layer_embeddings = stacked[:, l, :] # [N, D]
+        
+        # Compute pairwise distances [N, N]
+        dist_matrix = torch.cdist(layer_embeddings, layer_embeddings, p=2).numpy()
+        
+        for i in range(n):
+            within_dists = []
+            between_dists = []
+            for j in range(n):
+                if i == j:
+                    continue
+                d = dist_matrix[i, j]
+                if labels[i] == labels[j]:
+                    within_dists.append(d)
+                else:
+                    between_dists.append(d)
+            
+            d_within = np.mean(within_dists) if within_dists else 0.0
+            d_between = np.mean(between_dists) if between_dists else 0.0
+            scores[i, l] = d_between - d_within
+            
+    return scores
+
 
 def compute_layerwise_silhouette(trajectories: List[HiddenStateTrajectory], labels: List[str]) -> np.ndarray:
     """
