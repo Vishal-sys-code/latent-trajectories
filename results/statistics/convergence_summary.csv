@@ -1,0 +1,4 @@
+Comparison,p_value,cohens_d
+Start vs End,0.2126,-0.32690773432962283
+Start vs Peak,0.2493,-0.30125684930366503
+Semantic vs Reasoning,0.0,-2.024630789133099
