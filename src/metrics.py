@@ -6,23 +6,34 @@ from sklearn.metrics import silhouette_score
 import scipy.stats
 from .trajectories import HiddenStateTrajectory
 
-def compute_trajectory_length(trajectories: List[HiddenStateTrajectory]) -> np.ndarray:
+def compute_trajectory_length(trajectories: List[HiddenStateTrajectory], normalized: bool = True) -> np.ndarray:
     """
     Computes the total length of the trajectory for each prompt.
     Trajectory length measures how far a representation travels through latent space as it passes through the transformer.
     
-    L(T) = Σ || h_(l+1) - h_l ||
+    If normalized=True, calculates:
+    L_norm(T) = Σ || normalize(h_(l+1)) - normalize(h_l) ||_2
+    
+    If normalized=False, calculates:
+    L_raw(T) = Σ || h_(l+1) - h_l ||_2
     
     Args:
         trajectories: A list of HiddenStateTrajectory objects.
+        normalized: Whether to use L2-normalized hidden states.
         
     Returns:
         np.ndarray of shape [num_prompts] containing the trajectory lengths.
     """
     lengths = []
     for traj in trajectories:
-        dist = traj.layer_distance()
-        lengths.append(np.sum(dist) if len(dist) > 0 else 0.0)
+        t = traj.trajectory # shape [L, D]
+        if normalized:
+            t = F.normalize(t, p=2, dim=-1)
+        
+        # Calculate distances between consecutive layers
+        diffs = t[1:] - t[:-1]
+        distances = torch.norm(diffs, p=2, dim=-1).numpy()
+        lengths.append(np.sum(distances) if len(distances) > 0 else 0.0)
     return np.array(lengths)
 
 def compute_curvature(trajectories: List[HiddenStateTrajectory]) -> np.ndarray:
@@ -129,6 +140,62 @@ def compute_convergence_matrix(trajectories: List[HiddenStateTrajectory]) -> np.
             convergence_matrix[j, i] = c_ij
             
     return convergence_matrix
+
+def compute_convergence_score(trajectories: List[HiddenStateTrajectory], labels: List[str]) -> np.ndarray:
+    """
+    Computes the convergence score for each layer:
+    Convergence Score(l) = D_between(l) - D_within(l)
+    
+    where D_between is the mean pairwise distance between trajectories from different categories,
+    and D_within is the mean pairwise distance between trajectories from the same category.
+    Higher values imply stronger category separation, lower values imply convergence.
+    
+    Args:
+        trajectories: A list of HiddenStateTrajectory objects.
+        labels: A list of category labels for each prompt.
+        
+    Returns:
+        np.ndarray of shape [L] containing the convergence score at each layer.
+    """
+    if not trajectories or not labels:
+        return np.array([])
+        
+    num_layers = trajectories[0].num_layers
+    n = len(trajectories)
+    
+    unique_labels = set(labels)
+    if len(unique_labels) < 2 or n < 2:
+        return np.zeros(num_layers)
+        
+    scores = []
+    
+    # Pre-stack all trajectories to [N, L, D]
+    stacked = torch.stack([traj.trajectory for traj in trajectories]) # [N, L, D]
+    
+    for l in range(num_layers):
+        layer_embeddings = stacked[:, l, :] # [N, D]
+        
+        # Compute pairwise distances
+        dist_matrix = torch.cdist(layer_embeddings, layer_embeddings, p=2) # [N, N]
+        
+        within_distances = []
+        between_distances = []
+        
+        for i in range(n):
+            for j in range(i + 1, n):
+                d = dist_matrix[i, j].item()
+                if labels[i] == labels[j]:
+                    within_distances.append(d)
+                else:
+                    between_distances.append(d)
+                    
+        d_within = np.mean(within_distances) if within_distances else 0.0
+        d_between = np.mean(between_distances) if between_distances else 0.0
+        
+        scores.append(d_between - d_within)
+        
+    return np.array(scores)
+
 
 def compute_layerwise_silhouette(trajectories: List[HiddenStateTrajectory], labels: List[str]) -> np.ndarray:
     """
