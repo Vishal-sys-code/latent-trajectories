@@ -48,7 +48,7 @@ def mock_trajectories():
     return [traj1, traj2]
 
 def test_compute_trajectory_length(mock_trajectories):
-    lengths = compute_trajectory_length(mock_trajectories)
+    lengths = compute_trajectory_length(mock_trajectories, normalized=False)
     assert len(lengths) == 2
     # traj1 length: dist between layers is 1.0 each, so total length = 2.0
     assert np.isclose(lengths[0], 2.0)
