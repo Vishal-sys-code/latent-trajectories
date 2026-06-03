@@ -13,3 +13,4 @@ plotly
 nbformat
 joblib
 scipy
+tabulate
