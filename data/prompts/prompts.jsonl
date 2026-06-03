@@ -8,16 +8,16 @@
 {"id": "animal_008", "group": "animals", "subcategory": "marine", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The dolphin swims in the ocean."}
 {"id": "animal_009", "group": "animals", "subcategory": "bird", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The eagle soars through the sky."}
 {"id": "animal_010", "group": "animals", "subcategory": "domestic", "prompt_type": "contextual", "difficulty": "easy", "prompt": "My dog barks loudly."}
-{"id": "vehicle_001", "group": "vehicles", "subcategory": "land", "prompt_type": "atomic", "difficulty": "easy", "prompt": "car"}
-{"id": "vehicle_002", "group": "vehicles", "subcategory": "air", "prompt_type": "atomic", "difficulty": "easy", "prompt": "airplane"}
-{"id": "vehicle_003", "group": "vehicles", "subcategory": "water", "prompt_type": "atomic", "difficulty": "easy", "prompt": "ship"}
-{"id": "vehicle_004", "group": "vehicles", "subcategory": "space", "prompt_type": "atomic", "difficulty": "easy", "prompt": "rocket"}
-{"id": "vehicle_005", "group": "vehicles", "subcategory": "land", "prompt_type": "atomic", "difficulty": "easy", "prompt": "train"}
-{"id": "vehicle_006", "group": "vehicles", "subcategory": "land", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The vehicle is a car."}
-{"id": "vehicle_007", "group": "vehicles", "subcategory": "air", "prompt_type": "contextual", "difficulty": "easy", "prompt": "An airplane flies high."}
-{"id": "vehicle_008", "group": "vehicles", "subcategory": "water", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The ship sails on the sea."}
-{"id": "vehicle_009", "group": "vehicles", "subcategory": "space", "prompt_type": "contextual", "difficulty": "easy", "prompt": "A rocket travels to space."}
-{"id": "vehicle_010", "group": "vehicles", "subcategory": "land", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The train runs on tracks."}
+{"id": "vehicle_001", "group": "objects", "subcategory": "land", "prompt_type": "atomic", "difficulty": "easy", "prompt": "car"}
+{"id": "vehicle_002", "group": "objects", "subcategory": "air", "prompt_type": "atomic", "difficulty": "easy", "prompt": "airplane"}
+{"id": "vehicle_003", "group": "objects", "subcategory": "water", "prompt_type": "atomic", "difficulty": "easy", "prompt": "ship"}
+{"id": "vehicle_004", "group": "objects", "subcategory": "space", "prompt_type": "atomic", "difficulty": "easy", "prompt": "rocket"}
+{"id": "vehicle_005", "group": "objects", "subcategory": "land", "prompt_type": "atomic", "difficulty": "easy", "prompt": "train"}
+{"id": "vehicle_006", "group": "objects", "subcategory": "land", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The vehicle is a car."}
+{"id": "vehicle_007", "group": "objects", "subcategory": "air", "prompt_type": "contextual", "difficulty": "easy", "prompt": "An airplane flies high."}
+{"id": "vehicle_008", "group": "objects", "subcategory": "water", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The ship sails on the sea."}
+{"id": "vehicle_009", "group": "objects", "subcategory": "space", "prompt_type": "contextual", "difficulty": "easy", "prompt": "A rocket travels to space."}
+{"id": "vehicle_010", "group": "objects", "subcategory": "land", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The train runs on tracks."}
 {"id": "emotion_001", "group": "emotions", "subcategory": "positive", "prompt_type": "atomic", "difficulty": "easy", "prompt": "happy"}
 {"id": "emotion_002", "group": "emotions", "subcategory": "negative", "prompt_type": "atomic", "difficulty": "easy", "prompt": "sad"}
 {"id": "emotion_003", "group": "emotions", "subcategory": "negative", "prompt_type": "atomic", "difficulty": "easy", "prompt": "angry"}
@@ -48,3 +48,123 @@
 {"id": "analogy_008", "group": "analogies", "subcategory": "geographic", "prompt_type": "contextual", "difficulty": "medium", "prompt": "Tokyo is the capital of Japan."}
 {"id": "analogy_009", "group": "analogies", "subcategory": "functional", "prompt_type": "contextual", "difficulty": "medium", "prompt": "A doctor works in a hospital."}
 {"id": "analogy_010", "group": "analogies", "subcategory": "functional", "prompt_type": "contextual", "difficulty": "medium", "prompt": "A teacher works in a school."}
+{"id": "animal_011", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "horse"}
+{"id": "animal_012", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "rabbit"}
+{"id": "animal_013", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "hamster"}
+{"id": "animal_014", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "guinea pig"}
+{"id": "animal_015", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "cow"}
+{"id": "animal_016", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "sheep"}
+{"id": "animal_017", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "pig"}
+{"id": "animal_018", "group": "animals", "subcategory": "domestic", "prompt_type": "atomic", "difficulty": "easy", "prompt": "goat"}
+{"id": "animal_019", "group": "animals", "subcategory": "domestic", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The horse gallops across the field."}
+{"id": "animal_020", "group": "animals", "subcategory": "domestic", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The rabbit hops in the garden."}
+{"id": "animal_021", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "tiger"}
+{"id": "animal_022", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "bear"}
+{"id": "animal_023", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "wolf"}
+{"id": "animal_024", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "fox"}
+{"id": "animal_025", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "elephant"}
+{"id": "animal_026", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "giraffe"}
+{"id": "animal_027", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "zebra"}
+{"id": "animal_028", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "rhino"}
+{"id": "animal_029", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "hippo"}
+{"id": "animal_030", "group": "animals", "subcategory": "wild", "prompt_type": "atomic", "difficulty": "easy", "prompt": "leopard"}
+{"id": "animal_031", "group": "animals", "subcategory": "wild", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The wolf howls at the moon."}
+{"id": "animal_032", "group": "animals", "subcategory": "wild", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The elephant walks through the savanna."}
+{"id": "animal_033", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "whale"}
+{"id": "animal_034", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "shark"}
+{"id": "animal_035", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "octopus"}
+{"id": "animal_036", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "squid"}
+{"id": "animal_037", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "seal"}
+{"id": "animal_038", "group": "animals", "subcategory": "marine", "prompt_type": "atomic", "difficulty": "easy", "prompt": "walrus"}
+{"id": "animal_039", "group": "animals", "subcategory": "marine", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The whale breaches the ocean surface."}
+{"id": "animal_040", "group": "animals", "subcategory": "marine", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The shark swims quickly through the water."}
+{"id": "animal_041", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "hawk"}
+{"id": "animal_042", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "owl"}
+{"id": "animal_043", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "penguin"}
+{"id": "animal_044", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "ostrich"}
+{"id": "animal_045", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "parrot"}
+{"id": "animal_046", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "pigeon"}
+{"id": "animal_047", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "seagull"}
+{"id": "animal_048", "group": "animals", "subcategory": "bird", "prompt_type": "atomic", "difficulty": "easy", "prompt": "duck"}
+{"id": "animal_049", "group": "animals", "subcategory": "bird", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The owl hoots in the dark forest."}
+{"id": "animal_050", "group": "animals", "subcategory": "bird", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The penguin waddles on the ice."}
+{"id": "object_011", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "truck"}
+{"id": "object_012", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "bus"}
+{"id": "object_013", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "bicycle"}
+{"id": "object_014", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "motorcycle"}
+{"id": "object_015", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "helicopter"}
+{"id": "object_016", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "submarine"}
+{"id": "object_017", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "tractor"}
+{"id": "object_018", "group": "objects", "subcategory": "vehicles", "prompt_type": "atomic", "difficulty": "easy", "prompt": "scooter"}
+{"id": "object_019", "group": "objects", "subcategory": "vehicles", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The truck carries a heavy load."}
+{"id": "object_020", "group": "objects", "subcategory": "vehicles", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The bus stops to pick up passengers."}
+{"id": "object_021", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "hammer"}
+{"id": "object_022", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "screwdriver"}
+{"id": "object_023", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "wrench"}
+{"id": "object_024", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "pliers"}
+{"id": "object_025", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "saw"}
+{"id": "object_026", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "drill"}
+{"id": "object_027", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "chisel"}
+{"id": "object_028", "group": "objects", "subcategory": "tools", "prompt_type": "atomic", "difficulty": "easy", "prompt": "level"}
+{"id": "object_029", "group": "objects", "subcategory": "tools", "prompt_type": "contextual", "difficulty": "easy", "prompt": "He uses a hammer to drive the nail."}
+{"id": "object_030", "group": "objects", "subcategory": "tools", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The saw is used to cut the wood."}
+{"id": "object_031", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "chair"}
+{"id": "object_032", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "table"}
+{"id": "object_033", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "sofa"}
+{"id": "object_034", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "bed"}
+{"id": "object_035", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "lamp"}
+{"id": "object_036", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "plate"}
+{"id": "object_037", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "fork"}
+{"id": "object_038", "group": "objects", "subcategory": "household", "prompt_type": "atomic", "difficulty": "easy", "prompt": "spoon"}
+{"id": "object_039", "group": "objects", "subcategory": "household", "prompt_type": "contextual", "difficulty": "easy", "prompt": "She sits on the comfortable sofa."}
+{"id": "object_040", "group": "objects", "subcategory": "household", "prompt_type": "contextual", "difficulty": "easy", "prompt": "The dinner is served on a round plate."}
+{"id": "object_041", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "computer"}
+{"id": "object_042", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "laptop"}
+{"id": "object_043", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "smartphone"}
+{"id": "object_044", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "television"}
+{"id": "object_045", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "radio"}
+{"id": "object_046", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "camera"}
+{"id": "object_047", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "microwave"}
+{"id": "object_048", "group": "objects", "subcategory": "electronics", "prompt_type": "atomic", "difficulty": "easy", "prompt": "refrigerator"}
+{"id": "object_049", "group": "objects", "subcategory": "electronics", "prompt_type": "contextual", "difficulty": "easy", "prompt": "He types on his laptop keyboard."}
+{"id": "object_050", "group": "objects", "subcategory": "electronics", "prompt_type": "contextual", "difficulty": "easy", "prompt": "They watch a movie on the television."}
+{"id": "reasoning_011", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If Alice is taller than Bob, and Bob is taller than Charlie, then Alice is taller than Charlie."}
+{"id": "reasoning_012", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If X is greater than Y, and Y is greater than Z, then X > Z."}
+{"id": "reasoning_013", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Since A is faster than B, and B is faster than C, it follows that A is faster than C."}
+{"id": "reasoning_014", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If Monday comes before Tuesday, and Tuesday comes before Wednesday, then Monday is before Wednesday."}
+{"id": "reasoning_015", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If David is older than Emma, and Emma is older than Frank, then David must be older than Frank."}
+{"id": "reasoning_016", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If Box 1 is heavier than Box 2, and Box 2 is heavier than Box 3, Box 1 is the heaviest."}
+{"id": "reasoning_017", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "A implies B. B implies C. Therefore A implies C."}
+{"id": "reasoning_018", "group": "reasoning", "subcategory": "transitive", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "If the red car is faster than the blue car, and the blue car beats the green car, the red car beats the green car."}
+{"id": "reasoning_019", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Cat is to kitten as dog is to puppy."}
+{"id": "reasoning_020", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Hot is to cold as high is to low."}
+{"id": "reasoning_021", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Sun is to day as moon is to night."}
+{"id": "reasoning_022", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Bird is to flying as fish is to swimming."}
+{"id": "reasoning_023", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Eye is to seeing as ear is to hearing."}
+{"id": "reasoning_024", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Doctor is to hospital as teacher is to school."}
+{"id": "reasoning_025", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "Author is to book as composer is to symphony."}
+{"id": "reasoning_026", "group": "reasoning", "subcategory": "analogy", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "Telescope is to astronomy as microscope is to biology."}
+{"id": "reasoning_027", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "A cheetah runs faster than a lion, but a gazelle is faster than a zebra."}
+{"id": "reasoning_028", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Gold is more expensive than silver, but platinum is the most expensive."}
+{"id": "reasoning_029", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Summer is hotter than spring, while winter is the coldest season."}
+{"id": "reasoning_030", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "A mountain is taller than a hill, but a skyscraper is taller than a house."}
+{"id": "reasoning_031", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Iron is heavier than aluminum, but lead is heavier than iron."}
+{"id": "reasoning_032", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Water is denser than oil, so oil floats on water."}
+{"id": "reasoning_033", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "Jupiter is much larger than Earth, whereas Mercury is smaller than Earth."}
+{"id": "reasoning_034", "group": "reasoning", "subcategory": "comparative", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "A gigabyte holds more data than a megabyte, but less than a terabyte."}
+{"id": "reasoning_035", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Because it rained heavily, the river flooded its banks."}
+{"id": "reasoning_036", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If you heat ice to room temperature, it will melt into water."}
+{"id": "reasoning_037", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "The plant died because it did not receive any sunlight."}
+{"id": "reasoning_038", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Dropping the glass on the hard floor caused it to shatter."}
+{"id": "reasoning_039", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Eating too much candy will lead to a stomach ache."}
+{"id": "reasoning_040", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "Friction between the two surfaces generated a lot of heat."}
+{"id": "reasoning_041", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "The lack of regular maintenance resulted in the engine failing unexpectedly."}
+{"id": "reasoning_042", "group": "reasoning", "subcategory": "causal", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "An increase in interest rates typically causes a decrease in consumer borrowing."}
+{"id": "reasoning_043", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "easy", "prompt": "If you have 5 apples and buy 3 more, you have 8 apples in total."}
+{"id": "reasoning_044", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "easy", "prompt": "10 minus 4 equals 6."}
+{"id": "reasoning_045", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "easy", "prompt": "Multiplying 7 by 3 gives 21."}
+{"id": "reasoning_046", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "easy", "prompt": "Dividing 20 by 4 results in 5."}
+{"id": "reasoning_047", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "If a shirt costs $20 and is on a 50% discount, the new price is $10."}
+{"id": "reasoning_048", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "medium", "prompt": "A train travels 60 miles in one hour, so it goes 120 miles in two hours."}
+{"id": "reasoning_049", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "If 3 workers can build a wall in 4 days, 6 workers can build it in 2 days."}
+{"id": "reasoning_050", "group": "reasoning", "subcategory": "arithmetic", "prompt_type": "reasoning", "difficulty": "hard", "prompt": "The sum of the first 5 positive integers is 15."}
