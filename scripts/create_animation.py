@@ -119,6 +119,74 @@ star_y = rng.uniform(ranges[1][0], ranges[1][1], N_STARS)
 star_z = rng.uniform(ranges[2][0], ranges[2][1], N_STARS)
 star_sizes = rng.exponential(0.4, N_STARS) * 2
 
+# ────────────────── keyframe export utility ──────────────────
+def save_keyframes(group_name="animals", out_dir=OUT_DIR, dpi=300):
+    """Save static high-quality keyframe PNGs for five evenly spaced layers.
+
+    Files written:
+      - keyframe_1.png .. keyframe_5.png (ordered)
+      - keyframe_layer{layer}.png (explicit layer index)
+    """
+    if group_name not in trajectories:
+        print(f"[WARN] Group '{group_name}' not present — skipping keyframe save.")
+        return
+
+    # choose 5 layer indices: 0, ~L/4, ~L/2, ~3L/4, L-1
+    L = N_LAYERS
+    idxs = [0, int(round((L - 1) * 0.25)), int(round((L - 1) * 0.50)),
+            int(round((L - 1) * 0.75)), L - 1]
+    # ensure unique and sorted
+    layers_to_save = sorted(list(dict.fromkeys([max(0, min(L - 1, i)) for i in idxs])))
+
+    # colormap: blue (early) -> red (late)
+    key_cmap = LinearSegmentedColormap.from_list("key_cmap", ["#2a66ff", "#ff4444"], N=L)
+
+    data = trajectories[group_name]  # (n_prompts, L, 3)
+    n_prompts = data.shape[0]
+
+    for out_i, layer_idx in enumerate(layers_to_save, start=1):
+        fig_k = plt.figure(figsize=(12, 8), facecolor=BG_COLOR)
+        axk = fig_k.add_subplot(111, projection="3d", facecolor=BG_COLOR)
+
+        # set limits and labels
+        axk.set_xlim(*ranges[0])
+        axk.set_ylim(*ranges[1])
+        axk.set_zlim(*ranges[2])
+        axk.set_xlabel("PC 1", color="white", fontsize=10, labelpad=6)
+        axk.set_ylabel("PC 2", color="white", fontsize=10, labelpad=6)
+        axk.set_zlabel("PC 3", color="white", fontsize=10, labelpad=6)
+
+        # draw starfield faintly behind
+        axk.scatter(star_x, star_y, star_z, s=star_sizes * 0.8, c="white", alpha=0.06, edgecolors="none")
+
+        # For each prompt, plot trajectory up to layer_idx with per-point coloring
+        for p_idx in range(n_prompts):
+            pts = data[p_idx, : layer_idx + 1]
+            if pts.shape[0] == 0:
+                continue
+            xs, ys, zs = pts[:, 0], pts[:, 1], pts[:, 2]
+            # color by depth along the shown segment
+            colors = [key_cmap(int(round(255 * (i / max(layer_idx, 1))))) for i in range(pts.shape[0])]
+            axk.plot(xs, ys, zs, linewidth=1.2, alpha=0.55, color=GROUP_COLORS.get(group_name, "#ffffff"))
+            axk.scatter(xs, ys, zs, c=range(pts.shape[0]), cmap=key_cmap, s=28, depthshade=True)
+
+        # Title and annotation for figure-quality output
+        fig_k.text(0.50, 0.94, "Trajectory keyframe — layer %d" % layer_idx,
+                   ha="center", va="center", fontsize=16, color="white",
+                   weight="bold")
+        fig_k.text(0.50, 0.90, f"Group: {group_name.capitalize()}  •  {n_prompts} prompts  •  Layer {layer_idx}",
+                   ha="center", va="center", fontsize=11, color="#ccccdd")
+
+        # save both ordered and explicit filenames
+        os.makedirs(out_dir, exist_ok=True)
+        fname_ordered = os.path.join(out_dir, f"keyframe_{out_i}.png")
+        fname_layered = os.path.join(out_dir, f"keyframe_layer{layer_idx}.png")
+        fig_k.savefig(fname_ordered, dpi=dpi, bbox_inches="tight", facecolor=fig_k.get_facecolor())
+        fig_k.savefig(fname_layered, dpi=dpi, bbox_inches="tight", facecolor=fig_k.get_facecolor())
+        print(f"  [OK] Saved keyframe: {fname_ordered}  (layer {layer_idx})")
+        plt.close(fig_k)
+
+    print("Keyframe export complete.")
 # ────────────────── layer-depth colormap ──────────────────
 def _hex_to_rgb(h):
     h = h.lstrip("#")
@@ -208,6 +276,12 @@ for i, grp in enumerate(GROUP_ORDER):
                           path_effects=glow_neon(color),
                           transform=ax_overlay.transAxes)
     legend_texts.append(txt)
+
+# Export static keyframes for the 'animals' family (paper-quality PNGs)
+try:
+    save_keyframes(group_name="animals", out_dir=OUT_DIR, dpi=300)
+except Exception as e:
+    print(f"[WARN] Keyframe export failed: {type(e).__name__}: {e}")
 
 # Title card text elements
 title_main = ax_overlay.text(
