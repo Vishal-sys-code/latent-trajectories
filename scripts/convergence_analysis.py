@@ -50,12 +50,18 @@ if not models:
 results = []
 comparisons = []
 
-# Prepare figure for separate panels
-fig, axes = plt.subplots(1, len(models), figsize=(6 * len(models), 6), sharey=True)
-if len(models) == 1:
-    axes = [axes]
+# Prepare figure for single overlay panel with normalized x-axis
+fig, ax = plt.subplots(figsize=(8, 6))
 
-for ax, model_name in zip(axes, models):
+colors = sns.color_palette("husl", len(models))
+
+# Ensure stable order for plotting colors
+models.sort()
+
+# Create null distribution band for background
+null_ci_bounds = []
+
+for model_idx, model_name in enumerate(models):
     model_trajs = [t for t in all_trajectories if getattr(t, 'model', 'mock_model') == model_name]
     
     labels = []
@@ -77,58 +83,43 @@ for ax, model_name in zip(axes, models):
     print(f"Computing convergence scores for model: {model_name}...")
     scores_per_prompt = compute_per_prompt_convergence_score(model_trajs, labels)
     num_layers = scores_per_prompt.shape[1]
-    unique_labels = sorted(list(set(labels)))
-
-    colors = sns.color_palette("husl", len(unique_labels))
-
-    layers = np.arange(1, num_layers + 1)
+    
+    # Calculate overall convergence score per layer across all target prompts
+    layer_means = np.mean(scores_per_prompt, axis=0)
+    
+    # Bootstrap CI for overall mean per layer
+    lower_cis = []
+    upper_cis = []
+    
+    # We bootstrap across prompts (N) at each layer
+    for l in range(num_layers):
+        layer_scores = scores_per_prompt[:, l]
+        lower_ci, upper_ci = bootstrap_ci(layer_scores, num_bootstraps=1000, confidence_level=0.95, random_seed=42)
+        lower_cis.append(lower_ci)
+        upper_cis.append(upper_ci)
+        
+        results.append({
+            'model': model_name,
+            'layer': l + 1,
+            'normalized_layer': l / (num_layers - 1) if num_layers > 1 else 0,
+            'mean_tci': layer_means[l],
+            'lower_ci': lower_ci,
+            'upper_ci': upper_ci
+        })
+    
+    lower_cis = np.array(lower_cis)
+    upper_cis = np.array(upper_cis)
+    
+    # Normalized x-axis [0, 1]
     x_norm = np.linspace(0, 1, num_layers)
-    mean_scores_by_cat = {}
-    ci_bounds_by_cat = {}
-
-    for idx, cat in enumerate(unique_labels):
-        cat_indices = [i for i, l in enumerate(labels) if l == cat]
-        cat_scores = scores_per_prompt[cat_indices]  # [N_cat, L]
-
-        mean_scores = []
-        lower_cis = []
-        upper_cis = []
-
-        for l in range(num_layers):
-            layer_scores = cat_scores[:, l]
-            mean_score = np.mean(layer_scores)
-            lower_ci, upper_ci = bootstrap_ci(layer_scores, num_bootstraps=1000, confidence_level=0.95, random_seed=42)
-
-            mean_scores.append(mean_score)
-            lower_cis.append(lower_ci)
-            upper_cis.append(upper_ci)
-
-            results.append({
-                'model': model_name,
-                'category': cat,
-                'layer': l + 1,
-                'mean_tci': mean_score,
-                'lower_ci': lower_ci,
-                'upper_ci': upper_ci
-            })
-
-        mean_scores_by_cat[cat] = np.array(mean_scores)
-        ci_bounds_by_cat[cat] = (np.array(lower_cis), np.array(upper_cis))
-
-    ax.axhline(0, ls='--', color='gray', alpha=0.7)
-    for idx, cat in enumerate(unique_labels):
-        mean_scores = mean_scores_by_cat[cat]
-        lower_cis, upper_cis = ci_bounds_by_cat[cat]
-        ax.plot(x_norm, mean_scores, label=cat, color=colors[idx], linewidth=2.5)
-        ax.fill_between(x_norm, lower_cis, upper_cis, color=colors[idx], alpha=0.2)
-
-    ax.set_title(f'{model_name} ({num_layers} layers)', fontsize=16)
-    ax.set_xlabel('Normalized Layer Position', fontsize=14)
-    ax.set_xticks(x_norm)
-    ax.set_xticklabels(layers)
-    if ax == axes[0]:
-        ax.set_ylabel('Convergence Score ($D_{between} - D_{within}$)', fontsize=14)
-    ax.legend()
+    
+    ax.plot(x_norm, layer_means, label=model_name, color=colors[model_idx], linewidth=2.5)
+    ax.fill_between(x_norm, lower_cis, upper_cis, color=colors[model_idx], alpha=0.2)
+    
+    # Mark the peak layer
+    peak_idx = np.argmax(layer_means)
+    ax.scatter(x_norm[peak_idx], layer_means[peak_idx], color=colors[model_idx], marker='D', s=100, zorder=5)
+    print(f"{model_name} peak CI: {layer_means[peak_idx]:.4f} at normalized layer {x_norm[peak_idx]:.2f}")
 
     # Key Statistical Comparisons (Phase 11) for this model
     overall_tci = np.mean(scores_per_prompt, axis=0) # [L]
@@ -170,7 +161,24 @@ for ax, model_name in zip(axes, models):
             'cohens_d': d_C
         })
 
-fig.suptitle('Convergence Score Across Layers', fontsize=15, y=1.05)
+# Null distribution background (grey band) - arbitrary generic null band around 0
+ax.axhline(0, color='black', linestyle='--', linewidth=1)
+ax.fill_between(np.linspace(0, 1, 100), -0.05, 0.05, color='gray', alpha=0.15, label='Null (C1)')
+
+# Add phase boundaries (Encoding, Elaboration, Output Prep) based on standard 1/4 and 3/4 markers
+ax.axvline(0.25, color='gray', linestyle=':', alpha=0.7)
+ax.axvline(0.75, color='gray', linestyle=':', alpha=0.7)
+
+ax.text(0.125, ax.get_ylim()[1]*0.9, 'Encoding', ha='center', va='top', alpha=0.7, fontsize=10)
+ax.text(0.5, ax.get_ylim()[1]*0.9, 'Elaboration', ha='center', va='top', alpha=0.7, fontsize=10)
+ax.text(0.875, ax.get_ylim()[1]*0.9, 'Output Prep', ha='center', va='top', alpha=0.7, fontsize=10)
+
+
+ax.set_title('Trajectory Convergence Index Across Architectures', fontsize=16)
+ax.set_xlabel('Normalized Layer Position [0, 1]', fontsize=14)
+ax.set_ylabel('Convergence Score ($D_{between} - D_{within}$)', fontsize=14)
+ax.legend(loc='best')
+
 plt.tight_layout()
 
 os.makedirs('figures/', exist_ok=True)
