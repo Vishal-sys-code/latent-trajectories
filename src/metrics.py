@@ -150,6 +150,8 @@ def compute_convergence_score(trajectories: List[HiddenStateTrajectory], labels:
     and D_within is the mean pairwise distance between trajectories from the same category.
     Higher values imply stronger category separation, lower values imply convergence.
     
+    Prior to distance computation, representations are L2-normalized.
+    
     Args:
         trajectories: A list of HiddenStateTrajectory objects.
         labels: A list of category labels for each prompt.
@@ -174,6 +176,8 @@ def compute_convergence_score(trajectories: List[HiddenStateTrajectory], labels:
     
     for l in range(num_layers):
         layer_embeddings = stacked[:, l, :] # [N, D]
+        # L2-normalize before distance computation
+        layer_embeddings = F.normalize(layer_embeddings, p=2, dim=-1)
         
         # Compute pairwise distances
         dist_matrix = torch.cdist(layer_embeddings, layer_embeddings, p=2) # [N, N]
@@ -205,6 +209,8 @@ def compute_per_prompt_convergence_score(trajectories: List[HiddenStateTrajector
     - mean(D_within_i) is the average distance to other prompts in the SAME category
     - mean(D_between_i) is the average distance to prompts in DIFFERENT categories
     
+    Prior to distance computation, representations are L2-normalized.
+    
     Args:
         trajectories: A list of HiddenStateTrajectory objects.
         labels: A list of category labels for each prompt.
@@ -229,6 +235,8 @@ def compute_per_prompt_convergence_score(trajectories: List[HiddenStateTrajector
     
     for l in range(num_layers):
         layer_embeddings = stacked[:, l, :] # [N, D]
+        # L2-normalize before distance computation
+        layer_embeddings = F.normalize(layer_embeddings, p=2, dim=-1)
         
         # Compute pairwise distances [N, N]
         dist_matrix = torch.cdist(layer_embeddings, layer_embeddings, p=2).numpy()
