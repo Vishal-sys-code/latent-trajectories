@@ -632,25 +632,39 @@ F5 & Ambiguous Concepts &
 \subsection*{C. Trajectory Animation Keyframes}
 \label{app:animation}
 
-Figure~\ref{fig:app_keyframes} shows five selected keyframes from the layer-by-layer trajectory animation for the \textit{Animals} semantic family under global PCA projection, corresponding to layers 0, 3, 6, 9, and 12 in GPT-2 Small. The full animation (\texttt{figures/trajectory\_animation.gif}) is included in the repository and requires a PDF viewer with animation support (e.g., Adobe Acrobat) or direct browser rendering.
+Figure~\ref{fig:app_keyframes} shows all five prompt families overlaid in a single 2D PCA projection at five selected keyframe layers across all three model architectures. Each prompt's trajectory across layers is drawn as a colored line; marker shape encodes semantic group and marker color encodes layer depth (dark = early, bright = late). Dashed convex hulls show the spatial extent of each group at the early layers (dispersed), while solid hulls show the extent at the final layers (converged). The convergence from widely scattered early-layer representations into tight late-layer clusters is immediately visible across all three architectures, directly supporting the Trajectory Convergence Index results in Section~\ref{subsec:result_convergence}. The full layer-by-layer animation (\texttt{figures/trajectory\_animation.gif}) is included in the repository.
 
 \begin{figure}[t]
 \centering
-
-\includegraphics[width=0.40\linewidth]{keyframe_layer0.png}
-\includegraphics[width=0.40\linewidth]{keyframe_layer3.png}
-\includegraphics[width=0.40\linewidth]{keyframe_layer6.png}
-
-\vspace{0.5em}
-
-\includegraphics[width=0.40\linewidth]{keyframe_layer8.png}
-\includegraphics[width=0.40\linewidth]{keyframe_layer11.png}
-
+\includegraphics[width=0.85\linewidth]{figure6_keyframe_pca_overlay_gpt2.png}
 \caption{
-Trajectory keyframes across selected layers of GPT-2 Small.
-Representations transition from dispersed configurations in early layers to a compact semantic manifold in later layers.
+2D PCA overlay of trajectory keyframes across five selected layers of GPT-2 Small (12 layers total).
+All five semantic groups are shown simultaneously; trajectory lines connect each prompt's representations across layers 1, 3, 6, 9, and 12.
+Representations transition from dispersed configurations in early layers (dashed hulls) to compact semantic clusters in later layers (solid hulls), consistent with attractor-like convergence dynamics.
 }
-\label{fig:app_keyframes}
+\label{fig:app_keyframes_gpt2}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figure6_keyframe_pca_overlay_tinyllama.png}
+\caption{
+2D PCA overlay of trajectory keyframes across five selected layers of TinyLlama (22 layers total).
+All five semantic groups are shown simultaneously; trajectory lines connect each prompt's representations across normalized keyframe depths.
+Despite the deeper architecture, the same pattern of early-layer dispersion followed by progressive convergence into semantic clusters is observed, confirming that the attractor-like dynamics reported in Section~\ref{subsec:result_convergence} are architecture-agnostic properties of learned computation.
+}
+\label{fig:app_keyframes_tinyllama}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figure6_keyframe_pca_overlay_qwen25.png}
+\caption{
+2D PCA overlay of trajectory keyframes across five selected layers of Qwen2.5-1.5B (28 layers total).
+All five semantic groups are shown simultaneously; trajectory lines connect each prompt's representations across normalized keyframe depths.
+The trajectory geometry converges consistently to tight semantic clusters in late layers, replicating the convergence structure observed in both GPT-2 and TinyLlama. This cross-architecture consistency demonstrates the robustness and generality of the trajectory-geometric framework: the intrinsic geometry of representation evolution is independent of model capacity and architectural details, suggesting it reflects fundamental properties of the learned semantic manifold.
+}
+\label{fig:app_keyframes_qwen25}
 \end{figure}
 
 
