@@ -1,4 +1,10 @@
 model,Comparison,p_value,cohens_d
-gpt2,Start vs End,0.0027,0.7840362272289914
-gpt2,Start vs Peak,0.7227,-0.09048666330411918
-gpt2,Semantic vs Reasoning,0.0,-3.3039710214255176
+gpt2,Start vs End,0.0,0.559779676096179
+gpt2,Start vs Peak,0.6959,-0.040567642226068554
+gpt2,Semantic vs Reasoning,0.0,-2.3849482699192888
+qwen2.5,Start vs End,0.0084,-0.307564233422423
+qwen2.5,Start vs Peak,0.0084,-0.307564233422423
+qwen2.5,Semantic vs Reasoning,0.0,-2.3013967017772705
+tinyllama,Start vs End,0.0395,-0.2425724120521001
+tinyllama,Start vs Peak,0.0395,-0.2425724120521001
+tinyllama,Semantic vs Reasoning,0.0,-2.4104103524764295
