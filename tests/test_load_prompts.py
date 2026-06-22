@@ -1,9 +1,5 @@
-import os
-import sys
 import pytest
-
-sys.path.append(os.path.abspath('src'))
-import load_prompts
+from latent_trajectories import load_prompts
 
 def test_load_prompts():
     data = load_prompts.load_prompts('data/prompts/prompts.jsonl')

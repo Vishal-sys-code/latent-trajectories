@@ -17,7 +17,7 @@ from pathlib import Path
 script_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(script_dir))
 
-from src.trajectories import HiddenStateTrajectory
+from latent_trajectories.trajectories import HiddenStateTrajectory
 
 
 def load_prompts(path):

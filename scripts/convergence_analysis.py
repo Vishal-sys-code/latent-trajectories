@@ -8,9 +8,9 @@ import seaborn as sns
 import sys
 sys.path.append('.')
 
-from src.trajectories import HiddenStateTrajectory
-from src.metrics import compute_per_prompt_convergence_score
-from src.stats import compare_distributions, bootstrap_ci, permutation_test, cohens_d
+from latent_trajectories.trajectories import HiddenStateTrajectory
+from latent_trajectories.metrics import compute_per_prompt_convergence_score
+from latent_trajectories.stats import compare_distributions, bootstrap_ci, permutation_test, cohens_d
 
 sns.set_theme(style="whitegrid")
 

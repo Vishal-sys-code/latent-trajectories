@@ -9,8 +9,8 @@ import sys
 # Add parent directory to path so we can import from src
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.load_prompts import load_prompts
-from src.trajectories import HiddenStateTrajectory
+from latent_trajectories.load_prompts import load_prompts
+from latent_trajectories.trajectories import HiddenStateTrajectory
 
 def run_extraction(
     model_id: str,

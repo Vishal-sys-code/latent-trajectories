@@ -1,2 +1,39 @@
-sphinx_docs/_build/
-src/__pycache__/    
+# Sphinx build output (directory is named sphinix_docs, with the original typo)
+sphinix_docs/_build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Data artifacts (large binary files)
+data/hidden_states/
+data/trajectories*/
+results/
+
+# Environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# PyTorch
+*.pt
+!data/prompts/**

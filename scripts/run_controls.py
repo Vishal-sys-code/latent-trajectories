@@ -7,9 +7,9 @@ import pandas as pd
 from glob import glob
 import joblib
 
-from src.load_prompts import load_prompts
-from src.dimensionality_reduction import load_all_trajectories
-from src.controls import (
+from latent_trajectories.load_prompts import load_prompts
+from latent_trajectories.dimensionality_reduction import load_all_trajectories
+from latent_trajectories.controls import (
     permute_labels,
     gaussian_embeddings,
     shuffle_embeddings,

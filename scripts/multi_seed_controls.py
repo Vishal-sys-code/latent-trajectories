@@ -6,9 +6,9 @@ import pandas as pd
 import sys
 sys.path.append('.')
 
-from src.trajectories import HiddenStateTrajectory
-from src.metrics import compute_trajectory_length
-from src.stats import compare_distributions
+from latent_trajectories.trajectories import HiddenStateTrajectory
+from latent_trajectories.metrics import compute_trajectory_length
+from latent_trajectories.stats import compare_distributions
 
 # Controls: Random Embeddings, Layer Shuffling, Label Shuffling
 # We apply multiple seeds to stochastic steps
@@ -85,8 +85,8 @@ def get_label_shuffled_silhouette(trajectories, labels, seed):
     np.random.seed(seed)
     shuffled_labels = np.random.permutation(labels).tolist()
     # Using silhouette as a proxy metric for label shuffling validation
-    # Real pipeline uses compute_layerwise_silhouette from src.metrics
-    from src.metrics import compute_layerwise_silhouette
+    # Real pipeline uses compute_layerwise_silhouette from latent_trajectories.metrics
+    from latent_trajectories.metrics import compute_layerwise_silhouette
     return compute_layerwise_silhouette(trajectories, shuffled_labels)
 
 # Assuming trajectories have real features or we just mock it out.
@@ -94,7 +94,7 @@ def get_label_shuffled_silhouette(trajectories, labels, seed):
 labels = ['animals', 'objects', 'reasoning'] * (len(trajectories) // 3 + 1)
 labels = labels[:len(trajectories)]
 
-from src.metrics import compute_layerwise_silhouette
+from latent_trajectories.metrics import compute_layerwise_silhouette
 true_silh = compute_layerwise_silhouette(trajectories, labels)
 mean_true_silh = np.mean(true_silh)
 

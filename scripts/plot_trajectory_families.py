@@ -20,8 +20,8 @@ import seaborn as sns
 
 import sys
 sys.path.append('..')
-from src.trajectories import HiddenStateTrajectory
-from src.metrics import compute_trajectory_length
+from latent_trajectories.trajectories import HiddenStateTrajectory
+from latent_trajectories.metrics import compute_trajectory_length
 
 
 def load_prompts(path):

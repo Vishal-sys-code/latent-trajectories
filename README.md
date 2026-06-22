@@ -1,127 +1,212 @@
-# Trajectory Geometry of Transformer Representations Across Layers
+# Latent Trajectories
 
 <div align="center">
-  <img src="figures/trajectory_animation.gif" alt="Trajectory Evolution Animation" width="600"/>
-  <p><em>Figure 1: Latent state trajectories evolving across the layers of a transformer network.</em></p>
+  <img src="figures/trajectory_animation.gif" alt="Hidden-state trajectories evolving across transformer layers" width="700"/>
+  <p><em>Hidden-state trajectories evolving across transformer layers, visualized in PCA-projected latent space.</em></p>
 </div>
 
-## Introduction: A Computational Neuroscience Perspective
-
-This repository investigates the geometry of transformer representations across layers, applying a highly rigorous, computationally-driven analytical framework. While this work focuses on artificial neural networks, we draw heavy inspiration from **computational neuroscience** to understand how hidden states evolve dynamically.
-
-Rather than viewing transformers as static input-output mappings, we treat the forward pass as a **population trajectory** moving through a high-dimensional state space. Specifically, we investigate whether hidden-state evolution exhibits structures analogous to:
-
-- **Neural Manifolds**: Do transformer hidden states organize into low-dimensional manifolds that govern computation?
-- **Attractor Dynamics**: Do representations of semantically related concepts converge toward stable attractor states deeper in the network?
-- **Population Trajectories**: Can layer-by-layer transitions be mapped and analyzed structurally as non-random geometric paths?
-- **Representational Geometry**: Can the distance and curvature of these trajectories reveal reasoning, disambiguation, and semantic clustering that is invisible when looking at individual activations alone?
-
-*Note: This framing serves as an analytical lens. We explicitly avoid claims that LLMs implement biological cognition; rather, we demonstrate that tools from neuroscience reveal profound, non-random structural organization in artificial representations.*
+<p align="center">
+  <a href="https://github.com/Vishal-sys-code/latent-trajectories/actions"><img src="https://github.com/Vishal-sys-code/latent-trajectories/workflows/Tests/badge.svg" alt="Tests"></a>
+  <a href="https://pypi.org/project/latent-trajectories/"><img src="https://img.shields.io/pypi/v/latent-trajectories.svg" alt="PyPI"></a>
+  <a href="https://pypi.org/project/latent-trajectories/"><img src="https://img.shields.io/pypi/pyversions/latent-trajectories.svg" alt="Python versions"></a>
+  <a href="https://github.com/Vishal-sys-code/latent-trajectories/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+</p>
 
 ---
 
-## Key Findings & Visualizations
+## Quickstart
 
-We provide an open-source pipeline for extracting, analyzing, and statistically validating these trajectories across models like GPT-2, TinyLlama, and Qwen2.5. 
+```bash
+pip install latent-trajectories
+```
 
-### 1. Methodology & Pipeline
+```python
+from latent_trajectories import GeometryProbe
 
-<div align="center">
-  <img src="figures/phase_9/figure1_pipeline.png" alt="Methodology Pipeline" width="800"/>
-  <p><em>Figure 2: Our systematic pipeline: From hidden state extraction across layers, to high-dimensional metric computation, rigorous dimensionality reduction, and statistical validation.</em></p>
-</div>
+probe = GeometryProbe("gpt2")
+result = probe.run(
+    texts=["The cat sat on the mat.", "Explain quantum mechanics."],
+    labels=["factual", "reasoning"],
+)
 
-### 2. Neural Manifolds & Semantic Convergence
+print(result.metrics["summary"])
+# → {'n_trajectories': 2, 'n_layers': 12, 'hidden_dim': 768,
+#    'mean_trajectory_length': 5.23, 'mean_curvature': 0.41}
+```
 
-Through Representational Similarity Analysis (RSA) and rigorously controlled Dimensionality Reduction (global PCA and UMAP), we observe that prompts within the same semantic category (e.g., "Animals") start dispersed but converge into tight, distinct regions of the latent space.
+---
 
-<div align="center">
-  <img src="figures/pca/animals_overlay.png" alt="PCA Semantic Convergence" width="400" />
-  <img src="figures/umap/animals_overlay.png" alt="UMAP Semantic Convergence" width="400" />
-  <p><em>Figure 3: Global PCA (Left) and UMAP (Right) projections showing how representations belonging to the 'Animals' category evolve across layers. The trajectories demonstrate structured flow rather than random walks.</em></p>
-</div>
+## What This Does
 
-### 3. Quantitative Geometry: Convergence Index & Trajectory Length
+Transformers process text by passing representations through a stack of layers. This package treats that forward pass as a **trajectory through high-dimensional space** and measures its geometry — how far the representation travels, how sharply it turns, and whether semantically related inputs converge.
 
-We move beyond visual plots by employing quantitative, high-dimensional metrics. 
-- **Convergence Index:** Measures $D_{between}(l) - D_{within}(l)$. We observe a sharp statistical increase in convergence in the middle-to-late layers.
-- **Trajectory Length:** Measures the $L_2$ distance traveled across the latent space. We find that structured reasoning tasks travel significantly longer, more curved paths compared to basic semantic lookups.
+The core insight: these geometric properties reveal non-random structure in how transformers process information. Factual lookups travel short, straight paths. Reasoning tasks travel longer, more curved trajectories. Semantically related inputs converge in the middle layers.
+
+This work draws on **computational neuroscience** — specifically neural manifold analysis, attractor dynamics, and population trajectory geometry — to characterize transformer computation.
+
+---
+
+## The Controls Suite — Why This Is Different
+
+Most interpretability tools ship visualizations without validating that the patterns are real. **This package runs its own statistical controls**, the same ones from the research paper:
+
+```python
+controls = result.controls()
+print(controls)
+# {
+#   "label_permutation": {"passed": True, "layers_significant": 10, "total_layers": 12},
+#   "gaussian_noise":    {"passed": True, "real_length_mean": 5.23, "null_length_mean": 2.1},
+#   "temporal_shuffle":  {"passed": True, "real_curvature_mean": 0.41, "null_curvature_mean": 0.87}
+# }
+```
+
+| Control | What it tests | What "pass" means |
+|---|---|---|
+| **Label permutation** | Shuffles labels 1000×, builds null distribution of silhouette scores | Real clustering exceeds 95% of null at majority of layers |
+| **Gaussian noise** | Replaces embeddings with N(μ, σ) matched noise | Real trajectories are structurally longer than noise |
+| **Temporal shuffle** | Randomizes layer order within each trajectory | Real trajectories are smoother (lower curvature) than shuffled |
+
+---
+
+## API Reference
+
+### `GeometryProbe`
+
+```python
+from latent_trajectories import GeometryProbe
+
+# From a HuggingFace model ID
+probe = GeometryProbe("gpt2")
+
+# From a pre-loaded model (avoids reloading)
+from transformers import AutoModelForCausalLM, AutoTokenizer
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
+probe = GeometryProbe((model, tokenizer))
+```
+
+### `ProbeResult`
+
+| Method | Description |
+|---|---|
+| `result.metrics` | Dict of all computed metrics: `trajectory_length`, `curvature`, `layer_velocity`, `convergence_matrix`, `rsa_matrix`, `convergence_score`, `layerwise_silhouette` |
+| `result.controls()` | Runs 3 statistical controls, returns pass/fail per control |
+| `result.significance()` | Mann-Whitney U, permutation test, Cohen's d between label groups |
+| `result.plot()` | 3-D trajectory visualization (PCA or UMAP) |
+| `result.animate("out.gif")` | Layer-by-layer build-up GIF animation |
+
+### Metrics
+
+| Metric | Formula | What it measures |
+|---|---|---|
+| **Trajectory length** | Σ ‖h(l+1) − h(l)‖₂ | Total distance traveled through latent space |
+| **Curvature** | mean(arccos(v(l)·v(l+1) / ‖v(l)‖‖v(l+1)‖)) | How sharply the trajectory bends |
+| **Layer velocity** | ‖h(l+1) − h(l)‖ per layer | Speed of representation change |
+| **Convergence score** | D_between(l) − D_within(l) | Category separation at each layer |
+| **Silhouette** | sklearn silhouette_score per layer | Clustering quality at each layer |
+| **RSA matrix** | Spearman(RDM(l_i), RDM(l_j)) | Representational similarity between layers |
+
+---
+
+## CLI Reference
+
+```bash
+# Full analysis with metrics saved to JSON
+latent-trajectories analyze gpt2 --text "The cat sat on the mat" "What is 2+2?"
+
+# With labels and all outputs
+latent-trajectories analyze gpt2 \
+    --texts corpus.txt \
+    --labels labels.txt \
+    --controls --plot --animate \
+    --output-dir ./results
+
+# Package info
+latent-trajectories info
+```
+
+---
+
+## From the Research
+
+This package implements the methodology from:
+
+> **Trajectory Geometry of Transformer Representations Across Layers**
+
+### Key Findings
 
 <div align="center">
   <img src="figures/convergence_score_layers.png" alt="Convergence Index" width="400" />
   <img src="figures/figure6_trajectory_length.png" alt="Trajectory Length" width="400" />
-  <p><em>Figure 4: (Left) The Trajectory Convergence Index across layers, showing 95% Bootstrap Confidence Intervals. (Right) Total Trajectory Length grouped by semantic category.</em></p>
+  <p><em>Left: Trajectory Convergence Index across layers (95% Bootstrap CI). Right: Total Trajectory Length by semantic category.</em></p>
 </div>
 
-### 4. Layerwise Similarity Dynamics
-
-The geometric similarity between adjacent layers reveals the rate of representational change. We consistently observe initial rapid transformation, followed by a stabilization phase, and a final recalibration before the output head.
-
-<div align="center">
-  <img src="figures/layerwise_similarity.png" alt="Layerwise Cosine Similarity" width="600" />
-  <p><em>Figure 5: Cosine similarity between adjacent layers, illustrating the phase transitions of information processing within the network.</em></p>
-</div>
+1. **Semantic convergence**: Prompts within the same category start dispersed but converge into tight clusters in middle-to-late layers.
+2. **Trajectory length correlates with task complexity**: Reasoning tasks travel significantly longer paths than factual lookups.
+3. **Phase transitions**: Layer velocity reveals three processing phases — initial encoding, elaboration, and output preparation.
+4. **All results survive controls**: Label permutation, Gaussian noise, temporal shuffle, and multi-method DR all confirm the geometry is real.
 
 ---
 
-## Collaborator Quick Start Guide
+## Installation
 
-This section is for collaborating researchers to set up the environment, run the pipeline, and interpret the outputs.
-
-### Environment Setup
-
-The dependencies strictly follow standard ML data science libraries to ensure cross-platform reproducibility.
+### From PyPI (recommended)
 
 ```bash
-# Clone the repository
-git clone <repo_url>
-cd <repo_directory>
-
-# Create a virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# For MP4/GIF animations, ensure ffmpeg is installed:
-# sudo apt-get install -y ffmpeg
+pip install latent-trajectories
 ```
 
-### Running the Pipeline
+### From source (development)
 
-The architecture is built on a strict 3-layer separation: `src/` (core logic), `scripts/` (execution), and `notebooks/` (analysis).
+```bash
+git clone https://github.com/Vishal-sys-code/latent-trajectories.git
+cd latent-trajectories
+pip install -e ".[dev]"
+```
 
-1. **Dataset Generation:** The fixed JSONL dataset guarantees streaming compatibility.
-   ```bash
-   python scripts/generate_prompts.py
-   ```
-2. **Hidden State Extraction:** Extracts representations across all tokens and layers.
-   ```bash
-   python scripts/extract_hidden_states.py --model gpt2
-   ```
-3. **Metric Calculation:** Computes Convergence, Length, and Curvature in high-dimensional space.
-   ```bash
-   python scripts/convergence_analysis.py
-   ```
-4. **Statistical Validation:** Generates the rigorous tests (Mann-Whitney U, Permutation tests).
-   ```bash
-   python scripts/run_statistics.py
-   ```
+### Requirements
 
-All raw outputs, statistical CSVs, and generated plots are saved deterministically to the `results/` and `figures/` directories.
+- Python ≥ 3.10
+- PyTorch ≥ 2.0
+- HuggingFace Transformers ≥ 4.30
 
 ---
 
 ## Repository Structure
 
-*   `docs/`: Research specifications, experiment matrices, and theoretical framing.
-*   `src/`: Pure library logic, metric computation (returns NumPy arrays), and statistical validation.
-*   `data/`: Datasets and stored hidden state tensors (`.pt` files) with Parquet metadata.
-*   `notebooks/`: Thin Jupyter notebooks exclusively for EDA, loading saved data, and visualization.
-*   `scripts/`: Linear bash and Python scripts for pipeline execution.
-*   `tests/`: `pytest` suite for core modules. Run with `PYTHONPATH=. python3 -m pytest tests/`.
+```
+latent_trajectories/     # Installable package
+├── probe.py             # GeometryProbe — high-level API
+├── result.py            # ProbeResult — result container + controls/significance/plot
+├── extraction.py        # Hidden-state extraction for any HF causal LM
+├── trajectories.py      # HiddenStateTrajectory data object
+├── metrics.py           # 8 geometric metric functions
+├── controls.py          # 6 statistical controls
+├── stats.py             # Bootstrap CI, permutation test, Mann-Whitney U, Cohen's d
+├── visualization.py     # 3-D plots and GIF animations
+├── dimensionality_reduction.py  # PCA/UMAP fitting and projection
+└── cli.py               # Command-line interface
+
+scripts/                 # Research pipeline scripts (legacy)
+tests/                   # pytest test suite
+docs/                    # Research specification and experiment matrix
+```
+
+## Development
+
+```bash
+# Run the test suite
+pytest tests/ -v
+
+# Run with coverage
+pytest tests/ --cov=latent_trajectories --cov-report=term-missing
+```
 
 ## Documentation
-*   **[Research Specification](docs/research_spec.md)**: Outlines the motivation, models, metrics, and required controls.
-*   **[Experiment Matrix](docs/experiment_matrix.md)**: The systematic matrix of planned hypotheses vs. controls.
+
+- **[Research Specification](docs/research_spec.md)** — Motivation, models, metrics, and required controls
+- **[Experiment Matrix](docs/experiment_matrix.md)** — Systematic matrix of hypotheses vs. controls
+
+## License
+
+MIT

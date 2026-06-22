@@ -7,7 +7,7 @@ import sys
 import umap
 sys.path.append('.')
 
-from src.trajectories import HiddenStateTrajectory
+from latent_trajectories.trajectories import HiddenStateTrajectory
 
 # Load trajectories
 trajectory_dir = 'data/trajectories/'

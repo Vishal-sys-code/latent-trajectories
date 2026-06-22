@@ -1,11 +1,8 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pytest
 import numpy as np
 import torch
-from src.trajectories import HiddenStateTrajectory
-from src.metrics import (
+from latent_trajectories.trajectories import HiddenStateTrajectory
+from latent_trajectories.metrics import (
     compute_trajectory_length,
     compute_curvature,
     compute_layer_velocity,
@@ -13,7 +10,7 @@ from src.metrics import (
     compute_layerwise_silhouette,
     compute_rsa_matrix
 )
-from stats import (
+from latent_trajectories.stats import (
     bootstrap_ci,
     permutation_test,
     cohens_d

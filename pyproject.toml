@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "latent-trajectories"
+version = "0.1.0"
+description = "Geometric analysis of transformer hidden-state trajectories across layers"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Vishal" },
+]
+keywords = [
+    "transformers",
+    "interpretability",
+    "mechanistic-interpretability",
+    "hidden-states",
+    "trajectory-geometry",
+    "representational-similarity",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0",
+    "transformers>=4.30",
+    "accelerate",
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "umap-learn",
+    "plotly",
+    "joblib",
+    "tqdm",
+    "tabulate",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+docs = ["sphinx", "furo", "myst-parser"]
+
+[project.scripts]
+latent-trajectories = "latent_trajectories.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Vishal-sys-code/latent-trajectories"
+Repository = "https://github.com/Vishal-sys-code/latent-trajectories"
+Issues = "https://github.com/Vishal-sys-code/latent-trajectories/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"

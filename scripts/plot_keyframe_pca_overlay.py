@@ -118,7 +118,7 @@ def project_from_trajectories(model_key: str, cfg: dict) -> pd.DataFrame:
     from sklearn.decomposition import PCA
 
     sys.path.insert(0, PROJECT_ROOT)
-    from src.trajectories import HiddenStateTrajectory
+    from latent_trajectories.trajectories import HiddenStateTrajectory
 
     # Load prompt metadata
     prompts_data = {}
