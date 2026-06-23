@@ -53,7 +53,7 @@ def _build_3d_plot(result: ProbeResult) -> go.Figure:
     # Flatten all hidden states for PCA fitting
     all_states = []
     for t in trajectories:
-        tensor = t.hidden_states
+        tensor = t.trajectory
         if hasattr(tensor, "numpy"):
             tensor = tensor.detach().cpu().numpy()
         # Shape: [num_layers, hidden_dim] — take mean over seq_len if needed
@@ -73,7 +73,7 @@ def _build_3d_plot(result: ProbeResult) -> go.Figure:
 
     idx = 0
     for i, t in enumerate(trajectories):
-        tensor = t.hidden_states
+        tensor = t.trajectory
         if hasattr(tensor, "numpy"):
             tensor = tensor.detach().cpu().numpy()
         if tensor.ndim == 3:
