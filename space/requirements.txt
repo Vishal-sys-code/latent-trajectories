@@ -1,0 +1,13 @@
+torch>=2.0
+transformers>=4.30
+accelerate
+numpy
+scipy
+scikit-learn
+pandas
+matplotlib
+seaborn
+umap-learn
+plotly>=5.0
+gradio>=5.0
+latent-trajectories @ git+https://github.com/Vishal-sys-code/latent-trajectories.git@main
